@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -84,9 +85,16 @@ const NavBar = ({ handleHome }) => {
   const [state, setState] = React.useState({
     right: false,
   });
-
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+  
+  const [gameList, setGameList] = useState([]);
+
+  useEffect(() => {
+    axios.get(`/api/games`).then((res) => {
+      setGameList(res.data);
+    });
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -102,7 +110,7 @@ const NavBar = ({ handleHome }) => {
       <p id="simple-modal-description">
         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
       </p>
-      <CreateNewGame />
+      <CreateNewGame gameList={gameList} />
     </div>
   );
   const toggleDrawer = (anchor, open) => (event) => {

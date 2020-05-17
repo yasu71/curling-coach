@@ -28,9 +28,9 @@ const useStyles = makeStyles(CreateNewGameStyles, (theme) => ({
   },
 }));
 
-const CreateNewGame = () => {
+const CreateNewGame = ({ gameList }) => {
   const classes = useStyles();
-
+  console.log('new: ', gameList);
   const [state, setState] = React.useState({
     age: '',
     name: 'hai',
@@ -43,6 +43,47 @@ const CreateNewGame = () => {
       [name]: event.target.value,
     });
   };
+
+  const userTeams = [];
+  const opposingTeams = [];
+  // const games = () => {
+  //   for (const games of gameList) {
+  //     console.log('games.teams: ', games.teams);
+  //     for (const team of games.teams) {
+  //       console.log('team: ', team);
+  //       if(!userTeams.includes(team.team_name)){
+  //         userTeams.push(team.team_name);
+  //       console.log('team.team_name: ', team.team_name);
+  //       }
+  //     }
+  //   }
+  //   console.log("teams: ",userTeams)
+  //   return userTeams;
+  // };
+
+  const games = () => {
+    const games = [];
+    gameList.map((games) => {
+      games.push(games)
+      console.log("games: ", games)
+      games.map((teams, index) => {
+      console.log("teams: ", teams)
+      if(index === 0){
+        userTeams.push(teams)
+        console.log("userTeams: ", userTeams)
+        return userTeams;
+      } else {
+        opposingTeams.push(teams)
+        console.log("opposingTeams: ", opposingTeams)
+        return opposingTeams;
+      }
+    })
+    })
+    console.log("teams: ",userTeams)
+    return userTeams;
+  };
+
+  games();
 
   return (
     <div>
@@ -63,13 +104,8 @@ const CreateNewGame = () => {
             <Location />
           </Box>
           <Box mt={2}>
-            <FormControl
-              className={classes.formControl}
-              fullWidth={true}
-            >
-              <InputLabel htmlFor="age-native-simple">
-                Your Team
-              </InputLabel>
+            <FormControl className={classes.formControl} fullWidth={true}>
+              <InputLabel htmlFor="age-native-simple">Your Team</InputLabel>
               <Select
                 native
                 value={state.age}
@@ -80,20 +116,17 @@ const CreateNewGame = () => {
                 }}
               >
                 <option aria-label="None" value="" />
-                <option value={10}>Team 1</option>
-                <option value={20}>Team 2</option>
-                <option value={30}>Team 3</option>
+                {/* {gameList.map((game) => (
+                  {game.map((teams => (
+                <option key={game.id} value={game.teams.team_name}>{game.teams.team_name}</option>
+                  ))}
+                ))} */}
               </Select>
             </FormControl>
           </Box>
           <Box mt={2}>
-            <FormControl
-              className={classes.formControl}
-              fullWidth={true}
-            >
-              <InputLabel htmlFor="age-native-simple">
-                Opposing Team
-              </InputLabel>
+            <FormControl className={classes.formControl} fullWidth={true}>
+              <InputLabel htmlFor="age-native-simple">Opposing Team</InputLabel>
               <Select
                 native
                 value={state.age}
