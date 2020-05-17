@@ -45,5 +45,13 @@ class Api::GamesController < ApplicationController
   end
 
   private
+
+  def new_game
+    params.require(:shot).permit(
+      :end_id,
+      :shot_number,
+      :rotation,
+    )
+  end
   
 end

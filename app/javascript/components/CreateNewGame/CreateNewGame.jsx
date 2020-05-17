@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -30,12 +31,13 @@ const useStyles = makeStyles(CreateNewGameStyles, (theme) => ({
 
 const CreateNewGame = ({ gameList }) => {
   const classes = useStyles();
-  console.log('new: ', gameList);
-  const [state, setState] = React.useState({
-    age: '',
-    name: 'hai',
+  const [state, setState] = useState({
+    team_name: '',
+    team_one: '',
+    team_two: '',
   });
-
+  
+  console.log('setState: ', setState());
   const handleChange = (event) => {
     const name = event.target.name;
     setState({
@@ -43,47 +45,24 @@ const CreateNewGame = ({ gameList }) => {
       [name]: event.target.value,
     });
   };
+  
+  const save = (team_name, team_one, team_two) => {
+    const newGame = {
+    team_name,
+    team_one,
+    team_two
+    }
 
-  const userTeams = [];
-  const opposingTeams = [];
-  // const games = () => {
-  //   for (const games of gameList) {
-  //     console.log('games.teams: ', games.teams);
-  //     for (const team of games.teams) {
-  //       console.log('team: ', team);
-  //       if(!userTeams.includes(team.team_name)){
-  //         userTeams.push(team.team_name);
-  //       console.log('team.team_name: ', team.team_name);
-  //       }
-  //     }
-  //   }
-  //   console.log("teams: ",userTeams)
-  //   return userTeams;
-  // };
-
-  const games = () => {
-    const games = [];
-    gameList.map((games) => {
-      games.push(games)
-      console.log("games: ", games)
-      games.map((teams, index) => {
-      console.log("teams: ", teams)
-      if(index === 0){
-        userTeams.push(teams)
-        console.log("userTeams: ", userTeams)
-        return userTeams;
-      } else {
-        opposingTeams.push(teams)
-        console.log("opposingTeams: ", opposingTeams)
-        return opposingTeams;
-      }
-    })
-    })
-    console.log("teams: ",userTeams)
-    return userTeams;
-  };
-
-  games();
+    axios
+      .post('/api/games', newGame)
+      .then((res) => {
+        console.log("res.data", res.data)
+        return res.data;
+      })
+      .catch((err) => {
+        console.err(err);
+      });
+  }
 
   return (
     <div>
@@ -96,8 +75,15 @@ const CreateNewGame = ({ gameList }) => {
             <TextField
               classes={{ root: classes.locationField }}
               className={classes.overrides}
+              value={state.team_name}
+              onChange={handleChange}
               id="standard-basic"
               label="Team's Name"
+              required={true}
+              inputProps={{
+                name: 'teamName',
+              }}
+              team_name={state.team_name}
             />
           </Box>
           <Box mt={2}>
@@ -108,19 +94,19 @@ const CreateNewGame = ({ gameList }) => {
               <InputLabel htmlFor="age-native-simple">Your Team</InputLabel>
               <Select
                 native
-                value={state.age}
+                value={state.team_one}
                 onChange={handleChange}
                 inputProps={{
-                  name: 'age',
+                  name: 'team1',
                   id: 'age-native-simple',
                 }}
+                required={true}
+                team_one={state.team_one}
               >
                 <option aria-label="None" value="" />
-                {/* {gameList.map((game) => (
-                  {game.map((teams => (
-                <option key={game.id} value={game.teams.team_name}>{game.teams.team_name}</option>
-                  ))}
-                ))} */}
+                <option value={1}>Team 1</option>
+                <option value={2}>Team 2</option>
+                <option value={3}>Team 3</option>
               </Select>
             </FormControl>
           </Box>
@@ -129,22 +115,24 @@ const CreateNewGame = ({ gameList }) => {
               <InputLabel htmlFor="age-native-simple">Opposing Team</InputLabel>
               <Select
                 native
-                value={state.age}
+                value={state.team_two}
                 onChange={handleChange}
                 inputProps={{
-                  name: 'age',
+                  name: 'team2',
                   id: 'age-native-simple',
                 }}
+                required={true}
+                team_two={state.team_two}
               >
                 <option aria-label="None" value="" />
-                <option value={10}>Team 1</option>
-                <option value={20}>Team 2</option>
-                <option value={30}>Team 3</option>
+                <option value={4}>Team 4</option>
+                <option value={5}>Team 5</option>
+                <option value={6}>Team 6</option>
               </Select>
             </FormControl>
           </Box>
           <Box mt={2} align="right">
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onSave={(team_name, team_one, team_two) => save(team_name, team_one, team_two)}>
               Start Game
             </Button>
           </Box>
