@@ -7,9 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import CardMedia from '@material-ui/core/CardMedia';
+import Modal from '@material-ui/core/Modal';
+import Box from '@material-ui/core/Box';
 // import Button from '@material-ui/core/Button';
 
 import Logo from '../../assets/logo_white.svg';
+import CreateNewGame from '../CreateNewGame';
 
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
@@ -51,7 +54,30 @@ const useStyles = makeStyles((theme) => ({
   listItemText: {
     cursor: 'pointer',
   },
+  paper: {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
 }));
+
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 const NavBar = ({ handleHome }) => {
   const classes = useStyles();
@@ -59,6 +85,26 @@ const NavBar = ({ handleHome }) => {
     right: false,
   });
 
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const newGame = (
+    <div style={modalStyle} className={classes.paper}>
+      <h2 id="simple-modal-title">New Game</h2>
+      <p id="simple-modal-description">
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      </p>
+      <CreateNewGame />
+    </div>
+  );
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === 'keydown' &&
@@ -97,7 +143,8 @@ const NavBar = ({ handleHome }) => {
             <CreateNewFolderIcon cursor="pointer" />
           </ListItemIcon>
           <ListItemText
-            onClick={handleHome}
+            // onClick={handleHome}
+            onClick={handleOpen}
             classes={{ root: classes.listItemText }}
             variant="body1"
           >
@@ -144,6 +191,14 @@ const NavBar = ({ handleHome }) => {
           </Toolbar>
         </AppBar>
       </React.Fragment>
+      <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {newGame}
+        </Modal>
     </div>
   );
 };
