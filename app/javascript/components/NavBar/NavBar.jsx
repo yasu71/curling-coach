@@ -62,40 +62,34 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    top: '56%',
+    left: '59%',
+    transform: 'translate(-56%, -59%)', 
   },
 }));
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+// function rand() {
+//   return Math.round(Math.random() * 20) - 10;
+// }
 
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+// function getModalStyle() {
+//   const top = 50 + rand();
+//   const left = 50 + rand();
 
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+//   return {
+//     top: `${top}%`,
+//     left: `${left}%`,
+//     transform: `translate(-${top}%, -${left}%)`,
+//   };
+// }
 
 const NavBar = ({ handleHome }) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false,
   });
-  const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   
-  const [gameList, setGameList] = useState([]);
-
-  useEffect(() => {
-    axios.get(`/api/games`).then((res) => {
-      setGameList(res.data);
-    });
-  }, []);
-
   const handleOpen = () => {
     setOpen(true);
   };
@@ -105,12 +99,12 @@ const NavBar = ({ handleHome }) => {
   };
 
   const newGame = (
-    <div style={modalStyle} className={classes.paper}>
+    <div className={classes.paper}>
       <h2 id="simple-modal-title">New Game</h2>
       <p id="simple-modal-description">
         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
       </p>
-      <CreateNewGame gameList={gameList} />
+      <CreateNewGame />
     </div>
   );
   const toggleDrawer = (anchor, open) => (event) => {

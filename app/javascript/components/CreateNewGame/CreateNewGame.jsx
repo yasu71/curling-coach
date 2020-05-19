@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,15 +29,14 @@ const useStyles = makeStyles(CreateNewGameStyles, (theme) => ({
   },
 }));
 
-const CreateNewGame = ({ gameList }) => {
+const CreateNewGame = () => {
   const classes = useStyles();
-  const [state, setState] = useState({
-    team_name: '',
-    team_one: '',
-    team_two: '',
-  });
+  const [gameList, setGameList] = useState([]);
+  const [teamName, setTeamName] = useState('');
+  const [teamOne, setTeamOne] = useState();
+  const [teamTwo, setTeamTwo] = useState();
   
-  console.log('setState: ', setState());
+  // console.log('setState: ', setState());
   const handleChange = (event) => {
     const name = event.target.name;
     setState({
@@ -45,6 +44,12 @@ const CreateNewGame = ({ gameList }) => {
       [name]: event.target.value,
     });
   };
+
+  useEffect(() => {
+    axios.get(`/api/games`).then((res) => {
+      setGameList(res.data);
+    });
+  }, []);
   
   const save = (team_name, team_one, team_two) => {
     const newGame = {
@@ -52,7 +57,7 @@ const CreateNewGame = ({ gameList }) => {
     team_one,
     team_two
     }
-
+console.log(newGame)
     axios
       .post('/api/games', newGame)
       .then((res) => {
@@ -69,39 +74,39 @@ const CreateNewGame = ({ gameList }) => {
       <form className={classes.root} noValidate autoComplete="off">
         <Box>
           <Box>
-            <DateTime />
+            {/* <DateTime /> */}
           </Box>
           <Box mt={2}>
             <TextField
               classes={{ root: classes.locationField }}
               className={classes.overrides}
-              value={state.team_name}
-              onChange={handleChange}
+              value={teamName}
+              onChange={(event) => setTeamName(event.target.value)}
               id="standard-basic"
-              label="Team's Name"
+              label="Team Name"
               required={true}
-              inputProps={{
-                name: 'teamName',
-              }}
-              team_name={state.team_name}
+              // inputProps={{
+              //   name: 'team_name',
+              // }}
+              // team_name="team_name"
             />
           </Box>
           <Box mt={2}>
-            <Location />
+            {/* <Location /> */}
           </Box>
           <Box mt={2}>
-            <FormControl className={classes.formControl} fullWidth={true}>
-              <InputLabel htmlFor="age-native-simple">Your Team</InputLabel>
+            <FormControl className={classes.formControl} fullWidth={true} required={true} >
+              <InputLabel htmlFor="age-native-simple">Team One</InputLabel>
               <Select
                 native
-                value={state.team_one}
-                onChange={handleChange}
+                value={teamOne}
+                onChange={(event) => setTeamOne(event.target.value)}
                 inputProps={{
-                  name: 'team1',
+                  // name: 'team_one',
                   id: 'age-native-simple',
                 }}
                 required={true}
-                team_one={state.team_one}
+                // team_one={setTeamOne}
               >
                 <option aria-label="None" value="" />
                 <option value={1}>Team 1</option>
@@ -111,18 +116,18 @@ const CreateNewGame = ({ gameList }) => {
             </FormControl>
           </Box>
           <Box mt={2}>
-            <FormControl className={classes.formControl} fullWidth={true}>
-              <InputLabel htmlFor="age-native-simple">Opposing Team</InputLabel>
+            <FormControl className={classes.formControl} fullWidth={true} required={true} >
+              <InputLabel htmlFor="age-native-simple">Team Two</InputLabel>
               <Select
                 native
-                value={state.team_two}
-                onChange={handleChange}
+                value={teamTwo}
+                onChange={(event) => setTeamTwo(event.target.value)}
                 inputProps={{
-                  name: 'team2',
+                  // name: 'team_two',
                   id: 'age-native-simple',
                 }}
                 required={true}
-                team_two={state.team_two}
+                // team_two={setTeamTwo}
               >
                 <option aria-label="None" value="" />
                 <option value={4}>Team 4</option>
@@ -132,7 +137,7 @@ const CreateNewGame = ({ gameList }) => {
             </FormControl>
           </Box>
           <Box mt={2} align="right">
-            <Button variant="contained" color="primary" onSave={(team_name, team_one, team_two) => save(team_name, team_one, team_two)}>
+            <Button variant="contained" color="primary" onClick={(teamName, teamOne, teamTwo) => save(teamName, teamOne, teamTwo)}>
               Start Game
             </Button>
           </Box>
