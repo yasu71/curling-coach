@@ -3,6 +3,11 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
+## SCREENSHOTS
+
+!["Application Game Page"](https://github.com/jeff-sexton/curling-coach/blob/master/docs/Curling%20Coach%20-%20Main%20Game%20View.png?raw=true
+)
+
 Things you may want to cover:
 
 * Ruby version
