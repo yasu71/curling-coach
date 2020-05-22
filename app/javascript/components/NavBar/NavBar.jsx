@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     cursor: 'pointer',
+    fontFamily: "'Roboto Slab', 'serif'",
+    color: theme.palette.text.titles
   },
   logo: {
     width: 'auto',
