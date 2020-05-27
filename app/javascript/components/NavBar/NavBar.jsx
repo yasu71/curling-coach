@@ -87,9 +87,9 @@ const NavBar = ({ handleHome }) => {
 
   const newGame = (
     <div className={classes.paper}>
-      <h2 id="simple-modal-title">New Game</h2>
+      <h2 id="simple-modal-title">Create a New Game</h2>
       <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        <sup>*</sup>Required
       </p>
       <CreateNewGame />
     </div>
