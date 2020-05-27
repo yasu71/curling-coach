@@ -70,21 +70,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// function rand() {
-//   return Math.round(Math.random() * 20) - 10;
-// }
-
-// function getModalStyle() {
-//   const top = 50 + rand();
-//   const left = 50 + rand();
-
-//   return {
-//     top: `${top}%`,
-//     left: `${left}%`,
-//     transform: `translate(-${top}%, -${left}%)`,
-//   };
-// }
-
 const NavBar = ({ handleHome }) => {
   const classes = useStyles();
   const [state, setState] = React.useState({

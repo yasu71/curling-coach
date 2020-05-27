@@ -32,7 +32,7 @@ const useStyles = makeStyles(CreateNewGameStyles, (theme) => ({
 const CreateNewGame = () => {
   const classes = useStyles();
   const [gameList, setGameList] = useState([]);
-  const [teamName, setTeamName] = useState('');
+  const [location, setLocation] = useState('');
   const [teamOne, setTeamOne] = useState();
   const [teamTwo, setTeamTwo] = useState();
   
@@ -50,14 +50,20 @@ const CreateNewGame = () => {
       setGameList(res.data);
     });
   }, []);
-  
-  const save = (team_name, team_one, team_two) => {
+
+  const onSave = () => {
+    console.log('Did this work?')
+    console.log('direct location is:',location)
+
     const newGame = {
-    team_name,
-    team_one,
-    team_two
-    }
-console.log(newGame)
+      date_time: "2009-03-10 01:30:00",
+      location,
+      completed: false,
+      team1_id: 1,
+      team2_id: 2,
+      }
+    console.log(newGame);
+
     axios
       .post('/api/games', newGame)
       .then((res) => {
@@ -67,7 +73,8 @@ console.log(newGame)
       .catch((err) => {
         console.err(err);
       });
-  }
+  };
+  
 
   return (
     <div>
@@ -80,10 +87,10 @@ console.log(newGame)
             <TextField
               classes={{ root: classes.locationField }}
               className={classes.overrides}
-              value={teamName}
-              onChange={(event) => setTeamName(event.target.value)}
+              value={location}
+              onChange={(event) => setLocation(event.target.value)}
               id="standard-basic"
-              label="Team Name"
+              label="Game Location"
               required={true}
               // inputProps={{
               //   name: 'team_name',
@@ -137,7 +144,7 @@ console.log(newGame)
             </FormControl>
           </Box>
           <Box mt={2} align="right">
-            <Button variant="contained" color="primary" onClick={(teamName, teamOne, teamTwo) => save(teamName, teamOne, teamTwo)}>
+            <Button variant="contained" color="primary" onClick={onSave}>
               Start Game
             </Button>
           </Box>
