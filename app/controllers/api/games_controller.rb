@@ -1,4 +1,8 @@
 class Api::GamesController < ApplicationController
+
+  skip_before_action :verify_authenticity_token
+  # Fix problem with ActionController::InvalidAuthenticityToken
+
   def index
     game = Game.all
 
@@ -39,11 +43,29 @@ class Api::GamesController < ApplicationController
   end
 
   def create
+    game = Game.new(location: params[:location], date_time: params[:date_time], completed: params[:completed])
+
+    if game.save
+      game.game_participations.create({team_id: params[:team1_id]})
+      game.game_participations.create({team_id: params[:team2_id]})
+
+      render json: game
+    else
+      render json: { errors: game.errors.messages }
+
+    end
+    # puts params
   end
 
   def edit
   end
 
   private
+
+  def new_game
+    params.require(:shot).permit(
+      :end_id,
+    )
+  end
   
 end

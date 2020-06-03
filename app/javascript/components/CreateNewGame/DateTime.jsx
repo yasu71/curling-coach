@@ -20,14 +20,15 @@ const DateTime = () => {
     setSelectedDate(date);
   };
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <MuiPickersUtilsProvider
+      utils={DateFnsUtils}
+      className={classes.dateTimeField}
+      class={{ label: classes.time }}
+    >
       <Box display="flex" justifyContent="space-between">
         <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
           format="MM/dd/yyyy"
           margin="dense"
-          id="date-picker-inline"
           label="Date"
           value={selectedDate}
           onChange={handleDateChange}
@@ -35,6 +36,8 @@ const DateTime = () => {
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
+          required={true}
+          // time={time}
         />
         <KeyboardTimePicker
           margin="dense"
@@ -48,6 +51,8 @@ const DateTime = () => {
           }}
           keyboardIcon={<ScheduleIcon />}
           fontSize="small"
+          required={true}
+          variant="text"
         />
       </Box>
     </MuiPickersUtilsProvider>
