@@ -54,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
   navBar: {
     color: theme.palette.text.secondary,
   },
+  menu: {
+    color: theme.palette.text.secondary,
+  },
   listItemText: {
     cursor: 'pointer',
   },
@@ -87,8 +90,8 @@ const NavBar = ({ handleHome }) => {
 
   const newGame = (
     <div className={classes.paper}>
-      <h2 id="simple-modal-title">Create a New Game</h2>
-      <p id="simple-modal-description">
+      <h2 id="new-game-modal-title">Create a New Game</h2>
+      <p id="required">
         <sup>*</sup>Required
       </p>
       <CreateNewGame />
@@ -165,7 +168,8 @@ const NavBar = ({ handleHome }) => {
             </Typography>
             <IconButton
               onClick={toggleDrawer('right', true)}
-              color="inherit"
+              className={classes.menu}
+              variant="text"
               aria-label="menu"
             >
               <MenuIcon />
@@ -183,8 +187,8 @@ const NavBar = ({ handleHome }) => {
       <Modal
           open={open}
           onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+          aria-labelledby="new-game-modal-title"
+          aria-describedby="required"
         >
           {newGame}
         </Modal>

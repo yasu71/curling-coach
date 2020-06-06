@@ -89,13 +89,9 @@ const CreateNewGame = () => {
               className={classes.overrides}
               value={location}
               onChange={(event) => setLocation(event.target.value)}
-              id="standard-basic"
+              id="location-text-field"
               label="Game Location"
               required={true}
-              // inputProps={{
-              //   name: 'team_name',
-              // }}
-              // team_name="team_name"
             />
           </Box>
           <Box mt={2}>
@@ -103,17 +99,15 @@ const CreateNewGame = () => {
           </Box>
           <Box mt={2}>
             <FormControl className={classes.formControl} fullWidth={true} required={true} >
-              <InputLabel htmlFor="age-native-simple">Team One</InputLabel>
+              <InputLabel htmlFor="team-one-select">Team One</InputLabel>
               <Select
                 native
                 value={teamOne}
                 onChange={(event) => setTeamOne(event.target.value)}
                 inputProps={{
-                  // name: 'team_one',
-                  id: 'age-native-simple',
+                  id: 'team-one-select',
                 }}
                 required={true}
-                // team_one={setTeamOne}
               >
                 <option aria-label="None" value="" />
                 <option value={1}>Team 1</option>
@@ -124,17 +118,15 @@ const CreateNewGame = () => {
           </Box>
           <Box mt={2}>
             <FormControl className={classes.formControl} fullWidth={true} required={true} >
-              <InputLabel htmlFor="age-native-simple">Team Two</InputLabel>
+              <InputLabel htmlFor="team-two-select">Team Two</InputLabel>
               <Select
                 native
                 value={teamTwo}
                 onChange={(event) => setTeamTwo(event.target.value)}
                 inputProps={{
-                  // name: 'team_two',
-                  id: 'age-native-simple',
+                  id: 'team-two-select',
                 }}
                 required={true}
-                // team_two={setTeamTwo}
               >
                 <option aria-label="None" value="" />
                 <option value={4}>Team 4</option>
